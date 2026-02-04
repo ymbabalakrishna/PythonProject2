@@ -185,6 +185,23 @@ button {
         font-size: 13px;
     }
 }
+
+/* Add a play-overlay button style for blocked autoplay fallback */
+.play-overlay {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: #e63946;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
 </style>
 </head>
 
@@ -210,7 +227,7 @@ button {
 
     <div class="buttons">
         <button class="yes" onclick="yesClicked()">YES ❤️</button>
-        <button class="no" ontouchstart="moveNo()" onmouseover="moveNo()">NO 🙈</button>
+        <button class="no" onmouseover="moveNo()">NO 🙈</button>
     </div>
 
     <div class="message" id="loveMessage">
@@ -221,8 +238,9 @@ button {
 </div>
 
 <!-- 🔊 Background music -->
-<audio id="bgMusic" loop>
+<audio id="bgMusic" loop preload="auto" playsinline>
   <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_7f89b2b8c1.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
 </audio>
 
 <script>
@@ -235,11 +253,47 @@ function yesClicked() {
     document.body.appendChild(star);
     setTimeout(() => star.remove(), 1200);
 
-    document.getElementById("bgMusic").play();
+    // Try to play music and gracefully handle playback being blocked by the browser
+    const bg = document.getElementById('bgMusic');
+    try {
+        // reset to start
+        bg.currentTime = 0;
+        const playPromise = bg.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // playing succeeded
+                // optionally change UI or do nothing
+            }).catch((err) => {
+                // autoplay was likely blocked - show a small play button so user can start audio
+                showPlayOverlay();
+            });
+        }
+    } catch (e) {
+        // older browsers
+        showPlayOverlay();
+    }
+}
+
+function showPlayOverlay() {
+    // If a play overlay already exists, do nothing
+    if (document.querySelector('.play-overlay')) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'play-overlay';
+    btn.textContent = '▶️ Play music';
+    btn.onclick = function() {
+        const bg = document.getElementById('bgMusic');
+        bg.play().catch(() => {
+            // still blocked or failed; keep button so user can try again
+        });
+        // remove the overlay once the user initiates playback
+        btn.remove();
+    };
+    document.body.appendChild(btn);
 }
 
 function moveNo() {
-    const noBtn = document.querySelector(".no");
+    const noBtn = document.querySelector('.no');
     const x = Math.random() * 200 - 100;
     const y = Math.random() * 200 - 100;
     noBtn.style.transform = `translate(${x}px, ${y}px)`;
