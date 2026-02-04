@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+/* 🌌 Background */
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(40,0,0,0.55)),
+        url("https://images.unsplash.com/photo-1445233566136-a2a4e2c38bc2?q=80&w=687&auto=format&fit=crop");
+    background-size: cover;
+    background-position: center;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* ✨ Twinkling stars */
+.stars {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(1px 1px at 20% 30%, white 50%, transparent 51%),
+        radial-gradient(1px 1px at 70% 80%, white 50%, transparent 51%),
+        radial-gradient(1px 1px at 40% 60%, white 50%, transparent 51%),
+        radial-gradient(1px 1px at 80% 20%, white 50%, transparent 51%);
+    background-size: 200px 200px;
+    animation: twinkle 6s infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.4; }
+    to { opacity: 0.8; }
+}
+
+/* 💓 Heartbeat card */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    width: 90%;
+    max-width: 350px;
+    padding: 25px 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255, 50, 100, 0.3), 0 10px 20px rgba(0,0,0,0.35);
+    animation: heartbeat 2.5s infinite;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    14% { transform: scale(1.05); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.05); }
+    70% { transform: scale(1); }
+}
+
+h1 {
+    color: #e63946;
+    margin: 10px 0;
+    font-size: 1.4rem;
+}
+
+p {
+    color: #555;
+    font-size: 1rem;
+}
+
+/* Buttons */
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.yes {
+    background: #e63946;
+    color: white;
+}
+
+.no {
+    background: #ddd;
+}
+
+/* Message */
+.message {
+    display: none;
+    color: #e63946;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+/* 🌠 Shooting star */
+.shooting-star {
+    position: fixed;
+    top: 20%;
+    left: -200px;
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    animation: shoot 1s ease-out forwards;
+    z-index: 3;
+}
+
+@keyframes shoot {
+    to {
+        transform: translateX(120vw) translateY(40vh);
+        opacity: 0;
+    }
+}
+
+/* 💖 Floating hearts inside card */
+.hearts {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hearts span {
+    position: absolute;
+    bottom: -20px;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255,105,135,0.7);
+    clip-path: polygon(
+        50% 0%, 61% 12%, 75% 12%, 88% 25%, 88% 38%,
+        75% 50%, 50% 100%, 25% 50%, 12% 38%, 12% 25%,
+        25% 12%, 39% 12%
+    );
+    animation: floatUp linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    50% { transform: translateY(-50px) scale(1.1); opacity: 1; }
+    100% { transform: translateY(-120px) scale(1); opacity: 0; }
+}
+
+/* 💌 GIF inside card */
+.card img {
+    max-width: 95%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 12px;
+}
+
+/* 🌐 Responsive adjustments */
+@media (max-width: 480px) {
+    .card {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    p {
+        font-size: 0.95rem;
+    }
+
+    button {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<div class="card">
+    <div class="hearts">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <h1>Dear</h1>
+
+    <!-- ❤️ GIF -->
+    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmpib2V2cmxlb2wyZ2lucGJlOTRmaXNmcjd0cTA5M2QxZmsyanUwOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/F6LkzS5hhek3fDKgwb/giphy.gif" alt="Valentine GIF">
+
+    <h1>Will you be my Valentine? 💖</h1>
+    <p>Choose wisely 😌</p>
+
+    <div class="buttons">
+        <button class="yes" onclick="yesClicked()">YES ❤️</button>
+        <button class="no" ontouchstart="moveNo()" onmouseover="moveNo()">NO 🙈</button>
+    </div>
+
+    <div class="message" id="loveMessage">
+        💕 Yayyyy! 💕<br><br>
+        You just made my heart the happiest.<br>
+        Happy Valentine’s Day ❤️
+    </div>
+</div>
+
+<!-- 🔊 Background music -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_7f89b2b8c1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function yesClicked() {
+    document.querySelector(".buttons").style.display = "none";
+    document.getElementById("loveMessage").style.display = "block";
+
+    const star = document.createElement("div");
+    star.className = "shooting-star";
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 1200);
+
+    document.getElementById("bgMusic").play();
+}
+
+function moveNo() {
+    const noBtn = document.querySelector(".no");
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 200 - 100;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+</script>
+
+</body>
+</html>
